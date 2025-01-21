@@ -2,6 +2,4 @@ module github.com/iqhive/go-iptree
 
 go 1.20
 
-replace github.com/asergeyev/nradix => ../nradix
-
-require github.com/asergeyev/nradix v0.0.0-20170505151046-3872ab85bb56
+require github.com/iqhive/nradix v0.0.0-20250121092520-168d7acaa40e // indirect

@@ -18,7 +18,7 @@ import (
 	"net"
 	"net/netip"
 
-	"github.com/asergeyev/nradix"
+	"github.com/iqhive/nradix"
 )
 
 type IPTree struct {
