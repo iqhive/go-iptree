@@ -19,7 +19,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/zmap/go-iptree/iptree"
+	"github.com/iqhive/go-iptree/iptree"
 )
 
 type Blacklist struct {

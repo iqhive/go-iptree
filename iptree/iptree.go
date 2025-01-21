@@ -16,6 +16,7 @@ package iptree
 
 import (
 	"net"
+	"net/netip"
 
 	"github.com/asergeyev/nradix"
 )
@@ -35,15 +36,15 @@ func New() *IPTree {
 }
 
 func (i *IPTree) Add(cidr *net.IPNet, v interface{}) error {
-	return i.R.AddCIDR(cidr.String(), v)
+	return i.R.AddCIDRString(cidr.String(), v)
 }
 
 func (i *IPTree) AddByString(ipcidr string, v interface{}) error {
-	return i.R.AddCIDR(ipcidr, v)
+	return i.R.AddCIDRString(ipcidr, v)
 }
 
 func (i *IPTree) Get(ip net.IP) (interface{}, bool, error) {
-	v, err := i.R.FindCIDR(ip.String())
+	v, err := i.R.FindCIDRString(ip.String())
 	if v != nil {
 		return v, true, err
 	} else {
@@ -52,7 +53,34 @@ func (i *IPTree) Get(ip net.IP) (interface{}, bool, error) {
 }
 
 func (i *IPTree) GetByString(ipstr string) (interface{}, bool, error) {
-	v, err := i.R.FindCIDR(ipstr)
+	v, err := i.R.FindCIDRString(ipstr)
+	if v != nil {
+		return v, true, err
+	} else {
+		return v, false, err
+	}
+}
+
+func (i *IPTree) GetIPNet(ip net.IPNet) (interface{}, bool, error) {
+	v, err := i.R.FindCIDRIPNet(ip)
+	if v != nil {
+		return v, true, err
+	} else {
+		return v, false, err
+	}
+}
+
+func (i *IPTree) GetNetIP(ip net.IP) (interface{}, bool, error) {
+	v, err := i.R.FindCIDRNetIP(ip)
+	if v != nil {
+		return v, true, err
+	} else {
+		return v, false, err
+	}
+}
+
+func (i *IPTree) GetNetIPAddr(nip netip.Addr) (interface{}, bool, error) {
+	v, err := i.R.FindCIDRNetIPAddr(nip)
 	if v != nil {
 		return v, true, err
 	} else {
@@ -61,5 +89,5 @@ func (i *IPTree) GetByString(ipstr string) (interface{}, bool, error) {
 }
 
 func (i *IPTree) DeleteByString(ipstr string) error {
-	return i.R.DeleteCIDR(ipstr)
+	return i.R.DeleteCIDRString(ipstr)
 }
