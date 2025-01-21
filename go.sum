@@ -1,2 +1,4 @@
 github.com/asergeyev/nradix v0.0.0-20170505151046-3872ab85bb56 h1:Wi5Tgn8K+jDcBYL+dIMS1+qXYH2r7tpRAyBgqrWfQtw=
 github.com/asergeyev/nradix v0.0.0-20170505151046-3872ab85bb56/go.mod h1:8BhOLuqtSuT5NZtZMwfvEibi09RO3u79uqfHZzfDTR4=
+github.com/iqhive/nradix v0.0.0-20250121092520-168d7acaa40e h1:JLDtPSp7pBJUSr6awHn4N4wlLO5+rns8UKp8dljFJIw=
+github.com/iqhive/nradix v0.0.0-20250121092520-168d7acaa40e/go.mod h1:QovWuzzLL3KP39axvz8+96E817qiOJwW/gaRBeNxDt8=
