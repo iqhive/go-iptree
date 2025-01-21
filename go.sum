@@ -2,3 +2,5 @@ github.com/iqhive/nradix v0.0.0-20250121092520-168d7acaa40e h1:JLDtPSp7pBJUSr6aw
 github.com/iqhive/nradix v0.0.0-20250121092520-168d7acaa40e/go.mod h1:QovWuzzLL3KP39axvz8+96E817qiOJwW/gaRBeNxDt8=
 github.com/iqhive/nradix v0.0.0-20250121093224-6663db81b92d h1:NOfZlWjgqByQ6QR19wWgpXiNSF0JgEwqm8vhvwQGnZ8=
 github.com/iqhive/nradix v0.0.0-20250121093224-6663db81b92d/go.mod h1:CerzjyKnItnUIKtYzg1Fw1BE+iORGGjJj/6TDF8Y2AY=
+github.com/iqhive/nradix v1.0.0 h1:4GgB54yrLyqz5zzgJjdFqjIkytXjE9REGZFuUnuyikk=
+github.com/iqhive/nradix v1.0.0/go.mod h1:CerzjyKnItnUIKtYzg1Fw1BE+iORGGjJj/6TDF8Y2AY=
