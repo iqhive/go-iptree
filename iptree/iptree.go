@@ -15,7 +15,6 @@
 package iptree
 
 import (
-	"fmt"
 	"net"
 	"net/netip"
 
@@ -112,7 +111,7 @@ func (i *IPTree) DeleteByNetIPAddr(nip netip.Addr, mask netip.Prefix) error {
 // GetAll returns all entries in the IPTree as a map of CIDR strings to their values
 func (i *IPTree) GetAll() map[string]interface{} {
 	result := make(map[string]interface{})
-	_ = i.R.Walk(func(prefix string, value interface{}) error {
+	_ = i.Walk(func(prefix string, value interface{}) error {
 		result[prefix] = value
 		return nil
 	})
@@ -121,10 +120,10 @@ func (i *IPTree) GetAll() map[string]interface{} {
 
 // Walk iterates through all entries in the IPTree, calling the provided function
 // for each entry. If the callback returns false, iteration stops.
-func (i *IPTree) Walk(callback func(prefix string, value interface{}) bool) error {
+func (i *IPTree) Walk(callback func(prefix string, value interface{}) error) error {
 	return i.R.Walk(func(prefix string, value interface{}) error {
-		if !callback(prefix, value) {
-			return fmt.Errorf("walk stopped")
+		if err := callback(prefix, value); err != nil {
+			return err
 		}
 		return nil
 	})

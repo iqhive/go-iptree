@@ -28,9 +28,9 @@ func SaveIPTreeToGob(tree *iptree.IPTree, filename string) error {
 	treeData := make(map[string]interface{})
 
 	// Walk the tree and collect all entries
-	err = tree.Walk(func(prefix string, value interface{}) bool {
+	err = tree.Walk(func(prefix string, value interface{}) error {
 		treeData[prefix] = value
-		return true
+		return nil
 	})
 	if err != nil {
 		return err
