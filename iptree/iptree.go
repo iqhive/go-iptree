@@ -43,6 +43,14 @@ func (i *IPTree) AddByString(ipcidr string, v interface{}) error {
 	return i.R.AddCIDRString(ipcidr, v)
 }
 
+func (i *IPTree) AddByNetIP(ipcidr net.IP, mask net.IPMask, v interface{}) error {
+	return i.R.AddCIDRNetIP(ipcidr, mask, v)
+}
+
+func (i *IPTree) AddByNetIPAddr(ipcidr netip.Addr, mask netip.Prefix, v interface{}) error {
+	return i.R.AddCIDRNetIPAddr(ipcidr, mask, v)
+}
+
 func (i *IPTree) Get(ip net.IP) (interface{}, bool, error) {
 	v, err := i.R.FindCIDRString(ip.String())
 	if v != nil {
@@ -90,4 +98,12 @@ func (i *IPTree) GetNetIPAddr(nip netip.Addr) (interface{}, bool, error) {
 
 func (i *IPTree) DeleteByString(ipstr string) error {
 	return i.R.DeleteCIDRString(ipstr)
+}
+
+func (i *IPTree) DeleteByNetIP(ip net.IP, mask net.IPMask) error {
+	return i.R.DeleteCIDRNetIP(ip, mask)
+}
+
+func (i *IPTree) DeleteByNetIPAddr(nip netip.Addr, mask netip.Prefix) error {
+	return i.R.DeleteCIDRNetIPAddr(nip, mask)
 }
