@@ -27,8 +27,16 @@ func SaveIPTreeToGob(tree *iptree.IPTree, filename string) error {
 	// Create a map to store the tree data
 	treeData := make(map[string]interface{})
 
-	// Walk the tree and collect all entries
-	err = tree.Walk(func(prefix string, value interface{}) error {
+	// Walk the tree and collect all IPv4 entries
+	err = tree.WalkV4String(func(prefix string, value interface{}) error {
+		treeData[prefix] = value
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	// Walk the tree and collect all IPv6 entries
+	err = tree.WalkV6String(func(prefix string, value interface{}) error {
 		treeData[prefix] = value
 		return nil
 	})
