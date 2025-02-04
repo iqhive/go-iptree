@@ -136,8 +136,8 @@ func (i *IPTree) WalkV4Prefix(callback func(prefix netip.Prefix, value interface
 // WalkV4String iterates through all entries in the IPTree, calling the provided function
 // for each entry. If the callback returns false, iteration stops.
 func (i *IPTree) WalkV4String(callback func(prefix string, value interface{}) error) error {
-	return i.R.WalkV4String(func(prefix string, value interface{}) error {
-		if err := callback(prefix, value); err != nil {
+	return i.R.WalkV4(func(prefix netip.Prefix, value interface{}) error {
+		if err := callback(prefix.String(), value); err != nil {
 			return err
 		}
 		return nil
@@ -158,8 +158,8 @@ func (i *IPTree) WalkV6Prefix(callback func(prefix netip.Prefix, value interface
 // WalkV6String iterates through all entries in the IPTree, calling the provided function
 // for each entry. If the callback returns false, iteration stops.
 func (i *IPTree) WalkV6String(callback func(prefix string, value interface{}) error) error {
-	return i.R.WalkV6String(func(prefix string, value interface{}) error {
-		if err := callback(prefix, value); err != nil {
+	return i.R.WalkV6(func(prefix netip.Prefix, value interface{}) error {
+		if err := callback(prefix.String(), value); err != nil {
 			return err
 		}
 		return nil

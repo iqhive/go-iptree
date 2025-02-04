@@ -14,7 +14,10 @@
 
 package iptree
 
-import "testing"
+import (
+	"net/netip"
+	"testing"
+)
 
 func TestCreate(t *testing.T) {
 	i := New()
@@ -89,5 +92,161 @@ func TestFailingSubnet(t *testing.T) {
 	}
 	if val, _, _ := ip.GetByString("115.254.0.198"); val.(int) != 1 {
 		t.Error("Value within subset not correct")
+	}
+}
+
+func TestWalkV4String(t *testing.T) {
+	ip := New()
+	ip.AddByString("192.168.1.0/24", 1)
+	ip.AddByString("10.0.0.0/8", 2)
+	ip.AddByString("172.16.0.0/12", 3)
+	ip.AddByString("2001:db8::/32", 4) // IPv6 address
+
+	expectedCIDRs := map[string]int{
+		"192.168.1.0/24": 1,
+		"10.0.0.0/8":     2,
+		"172.16.0.0/12":  3,
+	}
+
+	visitedCIDRs := make(map[string]int)
+
+	err := ip.WalkV4String(func(prefix string, item interface{}) error {
+		visitedCIDRs[prefix] = item.(int)
+		return nil
+	})
+
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+
+	if len(visitedCIDRs) != len(expectedCIDRs) {
+		t.Errorf("Expected %d CIDRs, got %d", len(expectedCIDRs), len(visitedCIDRs))
+	}
+
+	for cidr, value := range expectedCIDRs {
+		if visitedCIDRs[cidr] != value {
+			t.Errorf("For CIDR %s: expected value %d, got %d", cidr, value, visitedCIDRs[cidr])
+		}
+	}
+
+	if _, found := visitedCIDRs["2001:db8::/32"]; found {
+		t.Error("Unexpectedly found IPv6 CIDR in IPv4 walk")
+	}
+}
+
+func TestWalkV4Prefix(t *testing.T) {
+	ip := New()
+	ip.AddByString("192.168.1.0/24", 1)
+	ip.AddByString("10.0.0.0/8", 2)
+	ip.AddByString("172.16.0.0/12", 3)
+	ip.AddByString("2001:db8::/32", 4) // IPv6 address
+
+	expectedCIDRs := map[string]int{
+		"192.168.1.0/24": 1,
+		"10.0.0.0/8":     2,
+		"172.16.0.0/12":  3,
+	}
+
+	visitedCIDRs := make(map[string]int)
+
+	err := ip.WalkV4Prefix(func(prefix netip.Prefix, item interface{}) error {
+		visitedCIDRs[prefix.String()] = item.(int)
+		return nil
+	})
+
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+
+	if len(visitedCIDRs) != len(expectedCIDRs) {
+		t.Errorf("Expected %d CIDRs, got %d", len(expectedCIDRs), len(visitedCIDRs))
+	}
+
+	for cidr, value := range expectedCIDRs {
+		if visitedCIDRs[cidr] != value {
+			t.Errorf("For CIDR %s: expected value %d, got %d", cidr, value, visitedCIDRs[cidr])
+		}
+	}
+
+	if _, found := visitedCIDRs["2001:db8::/32"]; found {
+		t.Error("Unexpectedly found IPv6 CIDR in IPv4 walk")
+	}
+}
+
+func TestWalkV6String(t *testing.T) {
+	ip := New()
+	ip.AddByString("2001:db8::/32", 1)
+	ip.AddByString("2001:db8:1::/48", 2)
+	ip.AddByString("2001:db8:2::/48", 3)
+	ip.AddByString("192.168.1.0/24", 4) // IPv4 address
+
+	expectedCIDRs := map[string]int{
+		"2001:db8::/32":   1,
+		"2001:db8:1::/48": 2,
+		"2001:db8:2::/48": 3,
+	}
+
+	visitedCIDRs := make(map[string]int)
+
+	err := ip.WalkV6String(func(prefix string, item interface{}) error {
+		visitedCIDRs[prefix] = item.(int)
+		return nil
+	})
+
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+
+	if len(visitedCIDRs) != len(expectedCIDRs) {
+		t.Errorf("Expected %d CIDRs, got %d", len(expectedCIDRs), len(visitedCIDRs))
+	}
+
+	for cidr, value := range expectedCIDRs {
+		if visitedCIDRs[cidr] != value {
+			t.Errorf("For CIDR %s: expected value %d, got %d", cidr, value, visitedCIDRs[cidr])
+		}
+	}
+
+	if _, found := visitedCIDRs["192.168.1.0/24"]; found {
+		t.Error("Unexpectedly found IPv4 CIDR in IPv6 walk")
+	}
+}
+
+func TestWalkV6Prefix(t *testing.T) {
+	ip := New()
+	ip.AddByString("2001:db8::/32", 1)
+	ip.AddByString("2001:db8:1::/48", 2)
+	ip.AddByString("2001:db8:2::/48", 3)
+	ip.AddByString("192.168.1.0/24", 4) // IPv4 address
+
+	expectedCIDRs := map[string]int{
+		"2001:db8::/32":   1,
+		"2001:db8:1::/48": 2,
+		"2001:db8:2::/48": 3,
+	}
+
+	visitedCIDRs := make(map[string]int)
+
+	err := ip.WalkV6Prefix(func(prefix netip.Prefix, item interface{}) error {
+		visitedCIDRs[prefix.String()] = item.(int)
+		return nil
+	})
+
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+
+	if len(visitedCIDRs) != len(expectedCIDRs) {
+		t.Errorf("Expected %d CIDRs, got %d", len(expectedCIDRs), len(visitedCIDRs))
+	}
+
+	for cidr, value := range expectedCIDRs {
+		if visitedCIDRs[cidr] != value {
+			t.Errorf("For CIDR %s: expected value %d, got %d", cidr, value, visitedCIDRs[cidr])
+		}
+	}
+
+	if _, found := visitedCIDRs["192.168.1.0/24"]; found {
+		t.Error("Unexpectedly found IPv4 CIDR in IPv6 walk")
 	}
 }
