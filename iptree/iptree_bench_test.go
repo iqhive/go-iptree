@@ -2139,7 +2139,7 @@ func BenchmarkAddiptreeNetIPAddr(b *testing.B) {
 		tree = New()
 		b.StartTimer()
 		for _, d := range data {
-			tree.AddByNetIPAddr(d.addr, d.prefix, 1)
+			tree.AddByNetIPAddr(d.addr, d.prefix, 1, true)
 		}
 	}
 

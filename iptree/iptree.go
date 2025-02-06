@@ -47,8 +47,8 @@ func (i *IPTree) AddByNetIP(ipcidr net.IP, mask net.IPMask, v interface{}) error
 	return i.R.AddCIDRNetIP(ipcidr, mask, v)
 }
 
-func (i *IPTree) AddByNetIPAddr(ipcidr netip.Addr, mask netip.Prefix, v interface{}) error {
-	return i.R.AddCIDRNetIPAddr(ipcidr, mask, v)
+func (i *IPTree) AddByNetIPAddr(ipcidr netip.Addr, mask netip.Prefix, v interface{}, overwrite bool) error {
+	return i.R.AddCIDRNetIPAddr(ipcidr, mask, v, overwrite)
 }
 
 func (i *IPTree) Get(ip net.IP) (interface{}, bool, error) {
