@@ -250,3 +250,73 @@ func TestWalkV6Prefix(t *testing.T) {
 		t.Error("Unexpectedly found IPv4 CIDR in IPv6 walk")
 	}
 }
+
+func TestManualWalkV4Prefix(t *testing.T) {
+	ip := New()
+	ip.AddByString("0.0.0.0/0", 1)
+	ip.AddByString("192.0.0.0/8", 2)
+	ip.AddByString("192.168.0.0/16", 3)
+	ip.AddByString("192.168.1.0/24", 4)
+
+	node, value, err := ip.R.FindCIDRNetIPAddrWithNode(netip.MustParseAddr("192.168.0.1"))
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+	if value != 3 {
+		t.Errorf("Value for 192.168.0.1 is not correct (3)")
+	}
+	// if node != nil {
+	// 	t.Logf("Node: %v, Prefix: %s, Value: %v", node, node.GetPrefix().String(), value)
+	// }
+	if node.GetPrefix().String() != "192.168.0.0/16" {
+		t.Errorf("Node prefix search for 192.168.0.1 is not correct (192.168.0.0/16)")
+	}
+	if node.GetParent().GetPrefix().String() != "192.0.0.0/8" {
+		t.Errorf("Parent prefix for 192.168.0.1 is not correct (192.0.0.0/8)")
+	}
+	parents := node.GetAllParents()
+	if len(parents) != 2 {
+		t.Errorf("Node has %d parents, expected 2", len(parents))
+	}
+	if parents[0].GetPrefix().String() != "192.0.0.0/8" {
+		t.Errorf("1st Parent prefix for 192.168.0.1 (%s) is not correct (192.0.0.0/8)", parents[0].GetPrefix().String())
+	}
+	if parents[1].GetPrefix().String() != "0.0.0.0/0" {
+		t.Errorf("2nd Parent prefix for 192.168.0.1 (%s) is not correct (0.0.0.0/0)", parents[1].GetPrefix().String())
+	}
+
+	node, value, err = ip.R.FindCIDRNetIPAddrWithNode(netip.MustParseAddr("192.168.1.1"))
+	if err != nil {
+		t.Errorf("Walk failed: %v", err)
+	}
+	// if node != nil {
+	// 	t.Logf("Node: %v, Prefix: %s, Value: %v", node, node.GetPrefix().String(), value)
+	// }
+	if node.GetPrefix().String() != "192.168.1.0/24" {
+		t.Errorf("Node prefix search for 192.168.1.1 is not correct (192.168.1.0/24)")
+	}
+	if node.GetParent().GetPrefix().String() != "192.168.0.0/16" {
+		t.Errorf("Parent prefix for 192.168.1.1 is not correct (192.168.0.0/16)")
+	}
+	parents = node.GetAllParents()
+	if len(parents) != 3 {
+		t.Errorf("Node has %d parents, expected 2", len(parents))
+	}
+	if parents[0].GetPrefix().String() != "192.168.0.0/16" {
+		t.Errorf("1st Parent prefix for 192.168.0.1 (%s) is not correct (192.168.0.0/16)", parents[0].GetPrefix().String())
+	}
+	if parents[1].GetPrefix().String() != "192.0.0.0/8" {
+		t.Errorf("1st Parent prefix for 192.168.0.1 (%s) is not correct (192.0.0.0/8)", parents[0].GetPrefix().String())
+	}
+	if parents[2].GetPrefix().String() != "0.0.0.0/0" {
+		t.Errorf("2nd Parent prefix for 192.168.0.1 (%s) is not correct (0.0.0.0/0)", parents[1].GetPrefix().String())
+	}
+
+	// if node.GetLeft() != nil {
+	// 	t.Logf("Left: %v / %s", node.GetLeft(), node.GetLeft().GetIP())
+	// }
+	// if node.GetRight() != nil {
+	// 	t.Logf("Right: %v / %s", node.GetRight(), node.GetRight().GetIP())
+	// }
+	t.Error("test")
+}
