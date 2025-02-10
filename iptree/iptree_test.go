@@ -318,5 +318,5 @@ func TestManualWalkV4Prefix(t *testing.T) {
 	// if node.GetRight() != nil {
 	// 	t.Logf("Right: %v / %s", node.GetRight(), node.GetRight().GetIP())
 	// }
-	t.Error("test")
+	// t.Error("test")
 }
