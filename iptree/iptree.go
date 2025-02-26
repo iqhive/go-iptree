@@ -108,6 +108,16 @@ func (i *IPTree) DeleteByNetIPAddr(nip netip.Addr, mask netip.Prefix) error {
 	return i.R.DeleteCIDRNetIPAddr(nip, mask)
 }
 
+// AddBatch adds multiple CIDR entries to the tree at once
+func (i *IPTree) AddBatch(cidrs []string, v interface{}) error {
+	for _, cidr := range cidrs {
+		if err := i.AddByString(cidr, v); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // GetAll returns all entries in the IPTree as a map of CIDR strings to their values
 func (i *IPTree) GetAll() map[string]interface{} {
 	result := make(map[string]interface{})
