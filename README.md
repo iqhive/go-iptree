@@ -1,11 +1,17 @@
 GoLang IPTree
 =============
 
+NB: Use github.com/iqhive/prefixlookup directly for performance
+NB: Use github.com/iqhive/prefixlookup directly for performance
+
 Forked from https://github.com/zmap/go-iptree
 
 [![Build Status](https://travis-ci.org/zmap/go-iptree.svg?branch=master)](https://travis-ci.org/zmap/go-iptree)
 
 This is a golang based prefix tree for IP subnets
+
+NB: Use github.com/iqhive/prefixlookup directly for performance
+NB: Use github.com/iqhive/prefixlookup directly for performance
 
 Install
 =======
