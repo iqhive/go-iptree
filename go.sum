@@ -1,2 +1,4 @@
-github.com/iqhive/nradix v1.0.11 h1:LgJ03hEND5BIt8GwU6e779VONAYuGOCrGRPBVlCguAw=
-github.com/iqhive/nradix v1.0.11/go.mod h1:CerzjyKnItnUIKtYzg1Fw1BE+iORGGjJj/6TDF8Y2AY=
+github.com/gaissmai/bart v0.29.0 h1:wO6HGE8g9YE0Wm0bCpYxwRzfQ4+fbJKOhL64e5ACGCI=
+github.com/gaissmai/bart v0.29.0/go.mod h1:GREWQfTLRWz/c5FTOsIw+KkscuFkIV5t8Rp7Nd1Td5c=
+github.com/iqhive/prefixlookup v1.0.0 h1:iqaNabWHIpS4D1v28clmlgWolcSNjj99CnA/IlSz0RY=
+github.com/iqhive/prefixlookup v1.0.0/go.mod h1:hhnQwWP8XcTsRpT8Y8SElzpPWvee8gOvxW8WBNEOfao=

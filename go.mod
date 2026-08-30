@@ -1,7 +1,5 @@
 module github.com/iqhive/go-iptree
 
-go 1.23.4
+go 1.24.0
 
-// replace github.com/iqhive/nradix => ../nradix
-
-require github.com/iqhive/nradix v1.0.11
+require github.com/iqhive/prefixlookup v1.0.0
