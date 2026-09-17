@@ -1,4 +1,2 @@
-github.com/gaissmai/bart v0.29.0 h1:wO6HGE8g9YE0Wm0bCpYxwRzfQ4+fbJKOhL64e5ACGCI=
-github.com/gaissmai/bart v0.29.0/go.mod h1:GREWQfTLRWz/c5FTOsIw+KkscuFkIV5t8Rp7Nd1Td5c=
-github.com/iqhive/prefixlookup v1.0.0 h1:iqaNabWHIpS4D1v28clmlgWolcSNjj99CnA/IlSz0RY=
-github.com/iqhive/prefixlookup v1.0.0/go.mod h1:hhnQwWP8XcTsRpT8Y8SElzpPWvee8gOvxW8WBNEOfao=
+github.com/iqhive/prefixlookup v1.0.1 h1:7wv1pxllEViWrkkTRMnjNgyfXzLSCtqd9ysUW7DzCDI=
+github.com/iqhive/prefixlookup v1.0.1/go.mod h1:HAjMN+NTwgQ1pJSHRSjpsf1m+4hXLG1jNyCmUV9W6/w=
